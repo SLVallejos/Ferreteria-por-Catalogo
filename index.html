@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ferretería El Tornillo – Catálogo de cotización</title>
+<style>
+  /* ── Reset & tokens ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --brand:    #1a1a1a;
+    --brand-lt: #2e2e2e;
+    --accent:   #D85A30;
+    --accent-lt:#F0997B;
+    --accent-bg:#FAECE7;
+    --wa:       #25D366;
+    --wa-dark:  #128C7E;
+    --surface:  #ffffff;
+    --surface-1:#F7F6F3;
+    --surface-2:#EFEDE8;
+    --border:   rgba(0,0,0,.10);
+    --border-md:rgba(0,0,0,.18);
+    --text:     #1a1a1a;
+    --text-2:   #555550;
+    --text-3:   #8a8880;
+    --radius:   8px;
+    --rad-lg:   14px;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    background: var(--surface-1);
+  }
+
+  /* ── Layout ── */
+  body { min-height: 100vh; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+  /* ── Navbar ── */
+  nav {
+    background: var(--brand);
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 20px;
+    height: 58px; display: flex; align-items: center; gap: 16px;
+  }
+  .nav-logo {
+    font-size: 17px; font-weight: 700; letter-spacing: -.3px;
+    color: #fff; text-decoration: none; display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo span { color: var(--accent-lt); }
+  .nav-search {
+    flex: 1; max-width: 420px;
+    display: flex; align-items: center; gap: 0;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: var(--radius); overflow: hidden;
+  }
+  .nav-search input {
+    flex: 1; background: none; border: none; outline: none;
+    color: #fff; font-size: 14px; padding: 8px 12px;
+  }
+  .nav-search input::placeholder { color: rgba(255,255,255,.5); }
+  .nav-search button {
+    background: none; border: none; cursor: pointer;
+    padding: 8px 12px; color: rgba(255,255,255,.7); font-size: 16px;
+  }
+  .nav-links { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+  .nav-links a {
+    color: rgba(255,255,255,.75); text-decoration: none;
+    font-size: 13px; padding: 6px 10px; border-radius: 6px;
+    transition: background .15s;
+  }
+  .nav-links a:hover { background: rgba(255,255,255,.1); color: #fff; }
+  .cart-btn {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--accent); color: #fff !important;
+    border-radius: var(--radius); padding: 7px 14px !important;
+    font-weight: 600; font-size: 13px !important;
+    transition: background .15s !important;
+    cursor: pointer;
+  }
+  .cart-btn:hover { background: #c04e26 !important; }
+  .cart-count {
+    background: #fff; color: var(--accent);
+    border-radius: 10px; font-size: 11px; font-weight: 700;
+    padding: 1px 6px; min-width: 18px; text-align: center;
+  }
+
+  /* ── Views ── */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ── Hero ── */
+  .hero {
+    background: var(--brand);
+    color: #fff;
+    padding: 56px 20px 52px;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent-lt); font-weight: 600; margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-size: clamp(26px, 4vw, 44px); font-weight: 800;
+    line-height: 1.15; margin-bottom: 14px; letter-spacing: -.5px;
+  }
+  .hero h1 em { color: var(--accent-lt); font-style: normal; }
+  .hero p { font-size: 16px; color: rgba(255,255,255,.65); max-width: 500px; margin: 0 auto 28px; }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #fff;
+    padding: 13px 28px; border-radius: var(--radius); font-weight: 700;
+    font-size: 15px; border: none; cursor: pointer;
+    transition: background .15s;
+  }
+  .hero-cta:hover { background: #c04e26; }
+  .hero-features {
+    display: flex; justify-content: center; gap: 32px; flex-wrap: wrap;
+    margin-top: 40px; padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+  .hero-feat { text-align: center; }
+  .hero-feat-icon { font-size: 22px; margin-bottom: 4px; }
+  .hero-feat p { font-size: 12px; color: rgba(255,255,255,.55); margin: 0; }
+  .hero-feat strong { display: block; font-size: 13px; color: rgba(255,255,255,.85); }
+
+  /* ── Category bar ── */
+  .cat-bar {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
+  .cat-bar::-webkit-scrollbar { height: 0; }
+  .cat-bar-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 20px;
+    display: flex; gap: 4px; white-space: nowrap; padding-top: 10px; padding-bottom: 10px;
+  }
+  .cat-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500;
+    border: 1px solid var(--border-md); background: transparent;
+    cursor: pointer; transition: all .15s; color: var(--text-2); white-space: nowrap;
+  }
+  .cat-pill:hover, .cat-pill.active {
+    background: var(--brand); color: #fff; border-color: var(--brand);
+  }
+
+  /* ── Catalog grid ── */
+  .catalog-header {
+    padding: 24px 0 16px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .catalog-header h2 { font-size: 20px; font-weight: 700; }
+  .catalog-header p { font-size: 13px; color: var(--text-3); }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px; padding-bottom: 48px;
+  }
+  .product-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--rad-lg); overflow: hidden; cursor: pointer;
+    transition: border-color .15s, transform .15s;
+  }
+  .product-card:hover { border-color: var(--border-md); transform: translateY(-2px); }
+  .product-card-img {
+    background: var(--surface-2); aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 52px; position: relative;
+  }
+  .product-card-img .badge {
+    position: absolute; top: 8px; left: 8px;
+    background: var(--brand); color: #fff;
+    font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px;
+    letter-spacing: .5px; text-transform: uppercase;
+  }
+  .product-card-body { padding: 14px; }
+  .product-card-brand { font-size: 11px; color: var(--text-3); font-weight: 600; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 4px; }
+  .product-card-name { font-size: 14px; font-weight: 600; line-height: 1.3; margin-bottom: 6px; color: var(--text); }
+  .product-card-sku { font-size: 11px; color: var(--text-3); font-family: monospace; }
+  .product-card-footer {
+    padding: 10px 14px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .no-price {
+    font-size: 12px; color: var(--accent); font-weight: 600;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .add-quick {
+    background: var(--brand); color: #fff; border: none;
+    width: 30px; height: 30px; border-radius: 6px; cursor: pointer;
+    font-size: 18px; display: flex; align-items: center; justify-content: center;
+    transition: background .15s; flex-shrink: 0;
+  }
+  .add-quick:hover { background: var(--accent); }
+
+  /* ── Product detail ── */
+  .detail-wrap {
+    padding: 24px 0 48px;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 32px;
+    align-items: start;
+  }
+  @media (max-width: 800px) { .detail-wrap { grid-template-columns: 1fr; } }
+  .breadcrumb { font-size: 12px; color: var(--text-3); padding: 16px 0; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .breadcrumb a { color: var(--text-3); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb span { color: var(--text-3); }
+  .main-img {
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: var(--rad-lg); aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 88px; margin-bottom: 12px; position: relative;
+    overflow: hidden;
+  }
+  .cat-label-overlay {
+    position: absolute; top: 14px; left: 14px;
+    background: var(--brand); color: #fff;
+    font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; padding: 3px 9px; border-radius: 5px;
+  }
+  .thumbs { display: flex; gap: 8px; margin-bottom: 24px; }
+  .thumb {
+    width: 60px; height: 60px; border-radius: 8px; background: var(--surface-2);
+    border: 2px solid var(--border); display: flex; align-items: center;
+    justify-content: center; font-size: 24px; cursor: pointer; transition: border-color .15s;
+  }
+  .thumb.active { border-color: var(--brand); }
+  .spec-box {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--rad-lg); padding: 18px; margin-bottom: 14px;
+  }
+  .spec-box h3 { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+  .spec-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 7px 0; border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .spec-row:last-child { border-bottom: none; }
+  .spec-row dt { color: var(--text-3); }
+  .spec-row dd { font-weight: 600; text-align: right; }
+  .pdf-link {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 12px 16px; cursor: pointer;
+    transition: border-color .15s; text-decoration: none; color: var(--text);
+  }
+  .pdf-link:hover { border-color: var(--accent); }
+  .pdf-icon { font-size: 24px; }
+  .pdf-meta strong { display: block; font-size: 13px; color: var(--accent); }
+  .pdf-meta span { font-size: 11px; color: var(--text-3); }
+
+  /* Action box */
+  .action-box {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--rad-lg); padding: 22px;
+    position: sticky; top: 74px;
+  }
+  .ab-brand-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .ab-brand-pill {
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 5px; padding: 2px 9px; font-size: 11px;
+    font-weight: 700; color: var(--text-2); letter-spacing: .5px; text-transform: uppercase;
+  }
+  .ab-sku { font-size: 11px; color: var(--text-3); font-family: monospace; }
+  .ab-title { font-size: 17px; font-weight: 700; line-height: 1.3; margin-bottom: 18px; }
+  .ab-label { font-size: 12px; color: var(--text-3); margin-bottom: 6px; font-weight: 600; }
+  .ab-variants { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+  .var-btn {
+    padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;
+    border: 1.5px solid var(--border-md); background: transparent;
+    cursor: pointer; transition: all .15s; color: var(--text-2);
+  }
+  .var-btn.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .var-btn:hover:not(.active) { border-color: var(--brand); color: var(--text); }
+  .color-swatch {
+    width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+    border: 2.5px solid transparent; transition: border-color .15s;
+  }
+  .color-swatch.active { border-color: var(--brand); }
+  .qty-row { display: flex; gap: 8px; align-items: center; margin-bottom: 16px; }
+  .qty-row select {
+    flex: 1; padding: 8px 10px; border: 1px solid var(--border-md);
+    border-radius: var(--radius); font-size: 13px; background: var(--surface);
+    color: var(--text); cursor: pointer;
+  }
+  .qty-ctrl {
+    display: flex; align-items: center; border: 1px solid var(--border-md);
+    border-radius: var(--radius); overflow: hidden;
+  }
+  .qty-ctrl button {
+    width: 34px; height: 36px; border: none; background: var(--surface-1);
+    cursor: pointer; font-size: 18px; color: var(--text); transition: background .15s;
+  }
+  .qty-ctrl button:hover { background: var(--surface-2); }
+  .qty-ctrl input {
+    width: 44px; height: 36px; border: none; border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border); text-align: center; font-size: 14px;
+    font-weight: 700; background: var(--surface); color: var(--text);
+  }
+  .no-price-banner {
+    background: var(--accent-bg); border: 1px solid var(--accent-lt);
+    border-radius: var(--radius); padding: 11px 14px; margin-bottom: 16px;
+    font-size: 12px; color: #712B13; line-height: 1.5;
+  }
+  .btn-add {
+    width: 100%; padding: 13px; font-size: 15px; font-weight: 700;
+    background: var(--brand); color: #fff; border: none;
+    border-radius: var(--radius); cursor: pointer; margin-bottom: 8px;
+    transition: background .15s; display: flex; align-items: center;
+    justify-content: center; gap: 8px;
+  }
+  .btn-add:hover { background: var(--brand-lt); }
+  .btn-wa-single {
+    width: 100%; padding: 11px; font-size: 13px; font-weight: 600;
+    background: transparent; color: var(--text); border: 1.5px solid var(--border-md);
+    border-radius: var(--radius); cursor: pointer; transition: all .15s;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .btn-wa-single:hover { border-color: var(--wa); color: var(--wa-dark); }
+  .ab-meta { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
+  .ab-meta p { font-size: 11px; color: var(--text-3); margin-bottom: 3px; }
+  .desc-box {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--rad-lg); padding: 18px; margin-bottom: 14px;
+  }
+  .desc-box h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .desc-box p { font-size: 13px; color: var(--text-2); line-height: 1.7; }
+
+  /* ── Cart view ── */
+  .cart-wrap { padding: 24px 0 48px; display: grid; grid-template-columns: 1fr 340px; gap: 24px; align-items: start; }
+  @media (max-width: 800px) { .cart-wrap { grid-template-columns: 1fr; } }
+  .cart-heading { font-size: 22px; font-weight: 800; margin-bottom: 20px; }
+  .cart-empty { text-align: center; padding: 60px 20px; color: var(--text-3); }
+  .cart-empty-icon { font-size: 48px; margin-bottom: 12px; }
+  .cart-empty p { font-size: 15px; margin-bottom: 20px; }
+  .cart-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--rad-lg); padding: 16px; margin-bottom: 12px;
+    display: grid; grid-template-columns: 64px 1fr auto;
+    gap: 14px; align-items: start;
+  }
+  .ci-img {
+    width: 64px; height: 64px; border-radius: 8px;
+    background: var(--surface-2); display: flex; align-items: center;
+    justify-content: center; font-size: 28px; flex-shrink: 0;
+  }
+  .ci-name { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+  .ci-meta { font-size: 12px; color: var(--text-3); margin-bottom: 6px; font-family: monospace; }
+  .ci-variant { font-size: 12px; color: var(--text-2); margin-bottom: 6px; }
+  .ci-qty-row { display: flex; align-items: center; gap: 8px; }
+  .ci-qty-ctrl { display: flex; align-items: center; border: 1px solid var(--border-md); border-radius: 6px; overflow: hidden; }
+  .ci-qty-ctrl button {
+    width: 28px; height: 28px; border: none; background: var(--surface-1);
+    cursor: pointer; font-size: 16px; color: var(--text); transition: background .15s;
+  }
+  .ci-qty-ctrl button:hover { background: var(--surface-2); }
+  .ci-qty-ctrl span {
+    width: 36px; text-align: center; font-size: 13px; font-weight: 700;
+    border-left: 1px solid var(--border); border-right: 1px solid var(--border);
+    padding: 4px 0;
+  }
+  .ci-unit { font-size: 11px; color: var(--text-3); }
+  .ci-note input {
+    width: 100%; font-size: 12px; border: 1px solid var(--border);
+    border-radius: 6px; padding: 5px 8px; background: var(--surface-1);
+    color: var(--text); margin-top: 6px;
+  }
+  .btn-remove {
+    background: none; border: none; cursor: pointer;
+    color: var(--text-3); font-size: 18px; padding: 4px;
+    border-radius: 5px; transition: color .15s;
+    align-self: start;
+  }
+  .btn-remove:hover { color: #c0392b; }
+
+  /* Summary panel */
+  .summary-panel {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--rad-lg); padding: 22px; position: sticky; top: 74px;
+  }
+  .summary-panel h3 { font-size: 16px; font-weight: 700; margin-bottom: 18px; }
+  .client-field { margin-bottom: 12px; }
+  .client-field label { display: block; font-size: 12px; font-weight: 600; color: var(--text-3); margin-bottom: 5px; }
+  .client-field input, .client-field textarea {
+    width: 100%; padding: 9px 11px; border: 1px solid var(--border-md);
+    border-radius: var(--radius); font-size: 13px; background: var(--surface);
+    color: var(--text); transition: border-color .15s;
+  }
+  .client-field input:focus, .client-field textarea:focus {
+    outline: none; border-color: var(--brand);
+  }
+  .client-field textarea { resize: vertical; min-height: 60px; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+  .summary-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; }
+  .summary-row.total { font-weight: 700; font-size: 15px; color: var(--accent); }
+  .btn-wa {
+    width: 100%; padding: 15px; font-size: 15px; font-weight: 800;
+    background: var(--wa); color: #fff; border: none;
+    border-radius: var(--radius); cursor: pointer; margin-top: 14px;
+    transition: background .15s; display: flex; align-items: center;
+    justify-content: center; gap: 10px; letter-spacing: .2px;
+  }
+  .btn-wa:hover { background: var(--wa-dark); }
+  .btn-wa svg { width: 20px; height: 20px; fill: #fff; flex-shrink: 0; }
+  .wa-disclaimer { font-size: 11px; color: var(--text-3); text-align: center; margin-top: 8px; line-height: 1.5; }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--brand); color: #fff; padding: 12px 20px;
+    border-radius: var(--radius); font-size: 13px; font-weight: 600;
+    transition: transform .3s cubic-bezier(.34,1.56,.64,1); z-index: 9999;
+    display: flex; align-items: center; gap: 10px; white-space: nowrap;
+    pointer-events: none;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast-cart-btn {
+    background: var(--accent); color: #fff; border: none; border-radius: 5px;
+    padding: 5px 10px; font-size: 12px; font-weight: 700; cursor: pointer;
+    pointer-events: all;
+  }
+
+  /* Misc */
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--text-3); background: none; border: none;
+    cursor: pointer; padding: 0; margin-bottom: 4px; transition: color .15s;
+  }
+  .back-btn:hover { color: var(--text); }
+  .empty-cat { text-align: center; padding: 80px 20px; color: var(--text-3); }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#" onclick="showView('home');return false;">
+      🔩 <span>El Tornillo</span>
+    </a>
+    <div class="nav-search">
+      <input type="text" id="search-input" placeholder="Buscar productos, SKU, marca…" oninput="filterProducts(this.value)">
+      <button onclick="filterProducts(document.getElementById('search-input').value)">🔍</button>
+    </div>
+    <div class="nav-links">
+      <a href="#" onclick="showView('catalog');return false;">Catálogo</a>
+      <a href="#" onclick="showView('home');return false;">Contacto</a>
+      <a class="cart-btn" href="#" onclick="showView('cart');return false;">
+        🛒 Cotización <span class="cart-count" id="cart-count">0</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  ✓ Agregado a tu cotización
+  <button class="toast-cart-btn" onclick="showView('cart')">Ver carrito</button>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     VIEW: HOME
+════════════════════════════════════════════ -->
+<div class="view active" id="view-home">
+  <div class="hero">
+    <div class="wrap">
+      <p class="hero-eyebrow">Catálogo de cotización online</p>
+      <h1>Todo para tu obra,<br><em>cotizá en minutos</em></h1>
+      <p>Navegá nuestro catálogo completo, seleccioná lo que necesitás y recibí tu presupuesto directamente por WhatsApp.</p>
+      <button class="hero-cta" onclick="showView('catalog')">Ver catálogo completo →</button>
+      <div class="hero-features">
+        <div class="hero-feat">
+          <div class="hero-feat-icon">📋</div>
+          <strong>Catálogo visual</strong>
+          <p>Fotos HD y fichas técnicas</p>
+        </div>
+        <div class="hero-feat">
+          <div class="hero-feat-icon">🛒</div>
+          <strong>Armá tu lista</strong>
+          <p>Seleccioná variantes y cantidades</p>
+        </div>
+        <div class="hero-feat">
+          <div class="hero-feat-icon">💬</div>
+          <strong>Cotización por WhatsApp</strong>
+          <p>Respuesta rápida y personalizada</p>
+        </div>
+        <div class="hero-feat">
+          <div class="hero-feat-icon">🚚</div>
+          <strong>Entrega a domicilio</strong>
+          <p>Córdoba y zona</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick categories -->
+  <div class="wrap" style="padding-top:36px;padding-bottom:48px;">
+    <h2 style="font-size:20px;font-weight:800;margin-bottom:20px;">Explorar por categoría</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;">
+      <button onclick="filterByCategory('Electricidad')" style="background:#1a1a1a;color:#fff;border:none;border-radius:12px;padding:20px 16px;cursor:pointer;text-align:left;transition:background .15s;" onmouseover="this.style.background='#D85A30'" onmouseout="this.style.background='#1a1a1a'">
+        <div style="font-size:28px;margin-bottom:8px;">⚡</div>
+        <strong style="font-size:13px;font-weight:700;">Electricidad</strong>
+      </button>
+      <button onclick="filterByCategory('Plomería')" style="background:#1a1a1a;color:#fff;border:none;border-radius:12px;padding:20px 16px;cursor:pointer;text-align:left;transition:background .15s;" onmouseover="this.style.background='#D85A30'" onmouseout="this.style.background='#1a1a1a'">
+        <div style="font-size:28px;margin-bottom:8px;">🚿</div>
+        <strong style="font-size:13px;font-weight:700;">Plomería</strong>
+      </button>
+      <button onclick="filterByCategory('Herramientas')" style="background:#1a1a1a;color:#fff;border:none;border-radius:12px;padding:20px 16px;cursor:pointer;text-align:left;transition:background .15s;" onmouseover="this.style.background='#D85A30'" onmouseout="this.style.background='#1a1a1a'">
+        <div style="font-size:28px;margin-bottom:8px;">🔨</div>
+        <strong style="font-size:13px;font-weight:700;">Herramientas</strong>
+      </button>
+      <button onclick="filterByCategory('Tornillería')" style="background:#1a1a1a;color:#fff;border:none;border-radius:12px;padding:20px 16px;cursor:pointer;text-align:left;transition:background .15s;" onmouseover="this.style.background='#D85A30'" onmouseout="this.style.background='#1a1a1a'">
+        <div style="font-size:28px;margin-bottom:8px;">🔩</div>
+        <strong style="font-size:13px;font-weight:700;">Tornillería</strong>
+      </button>
+      <button onclick="filterByCategory('Pintura')" style="background:#1a1a1a;color:#fff;border:none;border-radius:12px;padding:20px 16px;cursor:pointer;text-align:left;transition:background .15s;" onmouseover="this.style.background='#D85A30'" onmouseout="this.style.background='#1a1a1a'">
+        <div style="font-size:28px;margin-bottom:8px;">🎨</div>
+        <strong style="font-size:13px;font-weight:700;">Pintura</strong>
+      </button>
+      <button onclick="filterByCategory('Seguridad')" style="background:#1a1a1a;color:#fff;border:none;border-radius:12px;padding:20px 16px;cursor:pointer;text-align:left;transition:background .15s;" onmouseover="this.style.background='#D85A30'" onmouseout="this.style.background='#1a1a1a'">
+        <div style="font-size:28px;margin-bottom:8px;">🦺</div>
+        <strong style="font-size:13px;font-weight:700;">Seguridad EPP</strong>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     VIEW: CATALOG
+════════════════════════════════════════════ -->
+<div class="view" id="view-catalog">
+  <div class="cat-bar">
+    <div class="cat-bar-inner" id="cat-bar-inner"></div>
+  </div>
+  <div class="wrap">
+    <div class="catalog-header">
+      <div>
+        <h2 id="cat-title">Todos los productos</h2>
+        <p id="cat-count"></p>
+      </div>
+    </div>
+    <div class="product-grid" id="product-grid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     VIEW: PRODUCT DETAIL
+════════════════════════════════════════════ -->
+<div class="view" id="view-detail">
+  <div class="wrap">
+    <div class="breadcrumb" id="detail-breadcrumb"></div>
+    <div class="detail-wrap">
+      <div>
+        <div class="main-img" id="detail-img">
+          <div class="cat-label-overlay" id="detail-cat-label"></div>
+          <span id="detail-emoji"></span>
+        </div>
+        <div class="thumbs" id="detail-thumbs"></div>
+        <div class="spec-box">
+          <h3>Especificaciones técnicas</h3>
+          <dl id="detail-specs"></dl>
+        </div>
+        <div class="desc-box">
+          <h3>Descripción del producto</h3>
+          <p id="detail-desc"></p>
+        </div>
+        <a href="#" class="pdf-link" onclick="return false;">
+          <span class="pdf-icon">📄</span>
+          <div class="pdf-meta">
+            <strong>Ficha técnica PDF</strong>
+            <span>Hoja de especificaciones del fabricante</span>
+          </div>
+        </a>
+      </div>
+      <div>
+        <div class="action-box">
+          <div class="ab-brand-row">
+            <span class="ab-brand-pill" id="ab-brand"></span>
+            <span class="ab-sku" id="ab-sku"></span>
+          </div>
+          <p class="ab-title" id="ab-title"></p>
+
+          <div id="ab-variants-section"></div>
+
+          <div class="ab-label">Unidad y cantidad a cotizar</div>
+          <div class="qty-row">
+            <select id="ab-unit"></select>
+            <div class="qty-ctrl">
+              <button onclick="changeDetailQty(-1)">−</button>
+              <input type="number" id="ab-qty" value="1" min="1" style="width:44px;height:36px;border:none;border-left:1px solid #ddd;border-right:1px solid #ddd;text-align:center;font-size:14px;font-weight:700;">
+              <button onclick="changeDetailQty(1)">+</button>
+            </div>
+          </div>
+          <div class="no-price-banner">
+            ⏳ <strong>Precio y disponibilidad a confirmar.</strong> Al enviar tu consulta, el equipo de ventas te cotiza por WhatsApp al instante.
+          </div>
+          <button class="btn-add" onclick="addCurrentToCart()">
+            + Agregar a cotización
+          </button>
+          <button class="btn-wa-single" onclick="sendSingleToWA()">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.535 5.845L.057 23.57a.5.5 0 0 0 .611.611l5.789-1.516A11.944 11.944 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.944 9.944 0 0 1-5.053-1.373l-.361-.215-3.741.98.997-3.648-.235-.374A9.944 9.944 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+            Consultar este producto por WhatsApp
+          </button>
+          <div class="ab-meta">
+            <p>📍 Ferretería El Tornillo — Córdoba Capital</p>
+            <p>🕐 Lun–Vie 8–18h · Sáb 8–13h</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     VIEW: CART
+════════════════════════════════════════════ -->
+<div class="view" id="view-cart">
+  <div class="wrap">
+    <div style="padding-top:24px;">
+      <button class="back-btn" onclick="showView('catalog')">← Seguir agregando productos</button>
+    </div>
+    <div class="cart-wrap">
+      <div>
+        <h2 class="cart-heading">Tu lista de cotización</h2>
+        <div id="cart-items"></div>
+      </div>
+      <div>
+        <div class="summary-panel">
+          <h3>Datos para la cotización</h3>
+          <div class="client-field">
+            <label>Nombre y apellido *</label>
+            <input type="text" id="cl-name" placeholder="Juan García">
+          </div>
+          <div class="client-field">
+            <label>Localidad / barrio *</label>
+            <input type="text" id="cl-loc" placeholder="Barrio Nueva Córdoba">
+          </div>
+          <div class="client-field">
+            <label>Teléfono (opcional)</label>
+            <input type="tel" id="cl-phone" placeholder="351-456-7890">
+          </div>
+          <div class="client-field">
+            <label>Nota general (opcional)</label>
+            <textarea id="cl-note" placeholder="Necesito entrega urgente, ¿tienen stock?"></textarea>
+          </div>
+          <hr class="divider">
+          <div class="summary-row">
+            <span>Productos seleccionados</span>
+            <span id="sum-items">0</span>
+          </div>
+          <div class="summary-row total">
+            <span>💬 Cotización</span>
+            <span>A consultar</span>
+          </div>
+          <button class="btn-wa" onclick="sendToWhatsApp()">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.535 5.845L.057 23.57a.5.5 0 0 0 .611.611l5.789-1.516A11.944 11.944 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.944 9.944 0 0 1-5.053-1.373l-.361-.215-3.741.98.997-3.648-.235-.374A9.944 9.944 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+            Enviar pedido a WhatsApp
+          </button>
+          <p class="wa-disclaimer">Al tocar el botón se abre WhatsApp con el detalle completo de tu pedido. El encargado te responde con precios y disponibilidad.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+//  CONFIGURACIÓN — cambiá estos valores
+// ══════════════════════════════════════════════
+const CONFIG = {
+  whatsappNumber: '5493512345678', // código país + número sin + ni espacios
+  storeName: 'Ferretería El Tornillo',
+  storeUrl: 'ferreteria-eltornillo.com.ar'
+};
+
+// ══════════════════════════════════════════════
+//  BASE DE DATOS DE PRODUCTOS (demo)
+// ══════════════════════════════════════════════
+const PRODUCTS = [
+  {
+    id: 1, categoria: 'Electricidad', emoji: '🔌',
+    marca: 'Prysmian', sku: 'PRY-UNI-25-R',
+    nombre: 'Cable unipolar 2.5mm² 750V IRAM 2183',
+    descripcion: 'Cable unipolar de cobre electrolítico recocido, aislado con PVC de alta calidad. Ideal para instalaciones residenciales y comerciales. Cumple norma IRAM 2183.',
+    unidades: ['Metro lineal', 'Bobina 100m', 'Bobina 200m'],
+    variantes: [
+      { tipo: 'Sección', opciones: ['1.5 mm²', '2.5 mm²', '4 mm²', '6 mm²'] },
+      { tipo: 'Color', opciones: ['Rojo', 'Azul', 'Verde', 'Negro', 'Blanco'] }
+    ],
+    specs: { 'Sección nominal': '2.5 mm²', 'Tensión nominal': '750V', 'Norma': 'IRAM 2183', 'Conductor': 'Cobre electrolítico', 'Venta': 'Metro / bobina' }
+  },
+  {
+    id: 2, categoria: 'Electricidad', emoji: '⚡',
+    marca: 'Bticino', sku: 'BTI-TM-2X20',
+    nombre: 'Llave termomagnética bipolar 2x20A 220V riel DIN',
+    descripcion: 'Interruptor termomagnético bipolar para montaje en riel DIN. Protección contra sobrecargas y cortocircuitos. Capacidad de ruptura 6kA.',
+    unidades: ['Unidad'],
+    variantes: [
+      { tipo: 'Amperaje', opciones: ['10A', '16A', '20A', '25A', '32A'] },
+      { tipo: 'Polos', opciones: ['Monofásico 1x', 'Bipolar 2x', 'Tripolar 3x'] }
+    ],
+    specs: { 'Polos': 'Bipolar', 'Amperaje': '20A', 'Tensión': '220V', 'Ruptura': '6kA', 'Montaje': 'Riel DIN' }
+  },
+  {
+    id: 3, categoria: 'Electricidad', emoji: '🔦',
+    marca: '3M', sku: '3M-CINTA-20-NG',
+    nombre: 'Cinta aisladora 20m vinílica alta temperatura',
+    descripcion: 'Cinta aisladora vinílica de alta calidad. Resistente a altas temperaturas, humedad y aceites. Ideal para empalmes y aislaciones eléctricas.',
+    unidades: ['Unidad', 'Pack x10', 'Pack x30'],
+    variantes: [
+      { tipo: 'Color', opciones: ['Negro', 'Rojo', 'Azul', 'Blanco', 'Verde'] },
+      { tipo: 'Longitud', opciones: ['10m', '20m', '33m'] }
+    ],
+    specs: { 'Largo': '20 metros', 'Ancho': '19mm', 'Espesor': '0.19mm', 'Temperatura': '-18°C a +105°C', 'Norma': 'UL 510' }
+  },
+  {
+    id: 4, categoria: 'Plomería', emoji: '🚿',
+    marca: 'Awaduct', sku: 'AWA-CANO-34-PP',
+    nombre: 'Caño termofusión PP-R 3/4" presión rosca',
+    descripcion: 'Tubo de polipropileno random para agua fría y caliente. Apto para instalaciones de presión. Termofusión garantiza unión hermética y duradera.',
+    unidades: ['Metro', 'Barra 4m', 'Barra 6m'],
+    variantes: [
+      { tipo: 'Diámetro', opciones: ['1/2"', '3/4"', '1"', '1 1/4"', '2"'] },
+      { tipo: 'Tipo', opciones: ['Agua fría', 'Agua caliente PN20'] }
+    ],
+    specs: { 'Diámetro': '3/4"', 'Material': 'PP-R', 'Presión': 'PN10 / PN20', 'Temp. máx.': '95°C', 'Apto': 'Agua potable' }
+  },
+  {
+    id: 5, categoria: 'Plomería', emoji: '🔧',
+    marca: 'FV', sku: 'FV-GRI-MES-CR',
+    nombre: 'Grifería monocomando para mesada FV Star cromada',
+    descripcion: 'Grifería monocomando de mesada de una vía. Cartucho cerámico importado. Cuerpo y manija en zamak con terminación cromada.',
+    unidades: ['Unidad'],
+    variantes: [
+      { tipo: 'Terminación', opciones: ['Cromado', 'Blanco', 'Negro mate'] }
+    ],
+    specs: { 'Tipo': 'Monocomando', 'Cuerpo': 'Zamak', 'Cartucho': 'Cerámico 35mm', 'Conexión': '1/2"', 'Garantía': '5 años' }
+  },
+  {
+    id: 6, categoria: 'Herramientas', emoji: '🔨',
+    marca: 'Stanley', sku: 'STN-MRT-800',
+    nombre: 'Martillo de uña 800g mango fibra de vidrio',
+    descripcion: 'Martillo de carpintero con cabeza de acero templado y mango antivibratorio de fibra de vidrio. Uña magnética para inicio de clavado.',
+    unidades: ['Unidad'],
+    variantes: [
+      { tipo: 'Peso', opciones: ['400g', '600g', '800g', '1kg'] }
+    ],
+    specs: { 'Peso cabeza': '800g', 'Mango': 'Fibra de vidrio', 'Largo': '360mm', 'Cabeza': 'Acero al carbono templado', 'Uña': 'Magnética' }
+  },
+  {
+    id: 7, categoria: 'Herramientas', emoji: '⚙️',
+    marca: 'Bosch', sku: 'BSH-TDB-710W',
+    nombre: 'Taladro percutor Bosch 710W 13mm velocidad variable',
+    descripcion: 'Taladro percutor con mandril de 13mm y velocidad variable. Motor de 710W para trabajo continuo. Función taladro y percusión en hormigón, madera y metal.',
+    unidades: ['Unidad'],
+    variantes: [
+      { tipo: 'Voltaje', opciones: ['220V 50Hz'] }
+    ],
+    specs: { 'Potencia': '710W', 'Mandril': '13mm', 'RPM': '0–3000', 'IPM': '0–48.000', 'Peso': '1.9kg' }
+  },
+  {
+    id: 8, categoria: 'Tornillería', emoji: '🔩',
+    marca: 'Würth', sku: 'WUR-TOB-4X50',
+    nombre: 'Tornillo autoperforante cabeza avellanada 4x50mm zincado',
+    descripcion: 'Tornillo autoperforante con cabeza avellanada Phillips. Acero zincado con tratamiento anticorrosión. Para chapa, madera y plástico.',
+    unidades: ['Unidad', 'Caja x100', 'Caja x500', 'Kilo'],
+    variantes: [
+      { tipo: 'Medida', opciones: ['3.5x25mm', '3.9x32mm', '4x50mm', '4.2x70mm', '5x80mm'] },
+      { tipo: 'Cabeza', opciones: ['Avellanada', 'Hexagonal', 'Brida'] }
+    ],
+    specs: { 'Diámetro': '4mm', 'Longitud': '50mm', 'Acero': 'Zincado SAE 1022', 'Cabeza': 'Avellanada Phillips', 'Punta': 'Autoperforante' }
+  },
+  {
+    id: 9, categoria: 'Pintura', emoji: '🎨',
+    marca: 'Sherwin-Williams', sku: 'SHW-LAT-BLK-20L',
+    nombre: 'Látex exterior lavable color blanco 20L rendimiento ultralong',
+    descripcion: 'Pintura látex acrílica exterior de alto rendimiento. Resistente a la humedad, hongos y rayos UV. Lavable y de fácil aplicación. Rendimiento 12m²/litro.',
+    unidades: ['Lata 1L', 'Lata 4L', 'Lata 20L'],
+    variantes: [
+      { tipo: 'Color base', opciones: ['Blanco', 'Blanco hueso', 'A tinte'] },
+      { tipo: 'Acabado', opciones: ['Mate', 'Satinado'] }
+    ],
+    specs: { 'Volumen': '20 litros', 'Rendimiento': '~240m² / lata 20L', 'Diluente': 'Agua', 'Secado al tacto': '30 minutos', 'Repintado': '2 horas' }
+  },
+  {
+    id: 10, categoria: 'Seguridad', emoji: '🦺',
+    marca: '3M', sku: '3M-CASCO-H700',
+    nombre: 'Casco de seguridad 3M H-700 clase E ventilado blanco',
+    descripcion: 'Casco de seguridad industrial Clase E (eléctrica hasta 20.000V). Ventilación ajustable. Suspensión tipo matraca. Resistente a impactos y penetraciones según ANSI Z89.1.',
+    unidades: ['Unidad'],
+    variantes: [
+      { tipo: 'Color', opciones: ['Blanco', 'Amarillo', 'Naranja', 'Rojo', 'Azul'] },
+      { tipo: 'Ventilación', opciones: ['Sin ventilación', 'Ventilado ajustable'] }
+    ],
+    specs: { 'Clase': 'E – Eléctrica', 'Norma': 'ANSI Z89.1 / IRAM 3620', 'Material': 'HDPE', 'Voltaje': 'Hasta 20.000V', 'Suspensión': 'Matraca 4 puntos' }
+  }
+];
+
+const CATEGORIES = ['Todos', ...new Set(PRODUCTS.map(p => p.categoria))];
+
+// ══════════════════════════════════════════════
+//  ESTADO DE LA APP
+// ══════════════════════════════════════════════
+let cart = [];
+let currentProduct = null;
+let selectedVariants = {};
+let activeCategory = 'Todos';
+let searchQuery = '';
+
+// ══════════════════════════════════════════════
+//  NAVEGACIÓN
+// ══════════════════════════════════════════════
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+  if (name === 'catalog') renderCatalog();
+  if (name === 'cart') renderCart();
+}
+
+// ══════════════════════════════════════════════
+//  CATÁLOGO
+// ══════════════════════════════════════════════
+function filterByCategory(cat) {
+  activeCategory = cat;
+  searchQuery = '';
+  document.getElementById('search-input').value = '';
+  showView('catalog');
+}
+
+function filterProducts(q) {
+  searchQuery = q.toLowerCase();
+  activeCategory = 'Todos';
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  document.querySelector('.cat-pill')?.classList.add('active');
+  renderCatalog();
+}
+
+function getFilteredProducts() {
+  return PRODUCTS.filter(p => {
+    const matchCat = activeCategory === 'Todos' || p.categoria === activeCategory;
+    const matchQ = !searchQuery || p.nombre.toLowerCase().includes(searchQuery)
+      || p.marca.toLowerCase().includes(searchQuery)
+      || p.sku.toLowerCase().includes(searchQuery);
+    return matchCat && matchQ;
+  });
+}
+
+function renderCatalog() {
+  // Category bar
+  const bar = document.getElementById('cat-bar-inner');
+  bar.innerHTML = CATEGORIES.map(c =>
+    `<button class="cat-pill${activeCategory===c?' active':''}" onclick="setCat('${c}')">${c}</button>`
+  ).join('');
+
+  const filtered = getFilteredProducts();
+  document.getElementById('cat-title').textContent =
+    activeCategory === 'Todos' ? 'Todos los productos' : activeCategory;
+  document.getElementById('cat-count').textContent =
+    `${filtered.length} producto${filtered.length!==1?'s':''} encontrado${filtered.length!==1?'s':''}`;
+
+  const grid = document.getElementById('product-grid');
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="empty-cat" style="grid-column:1/-1"><div style="font-size:40px;margin-bottom:12px">🔍</div><p>No se encontraron productos para "${searchQuery || activeCategory}".</p></div>`;
+    return;
+  }
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card" onclick="openProduct(${p.id})">
+      <div class="product-card-img">
+        <span>${p.emoji}</span>
+        <div class="badge">${p.categoria}</div>
+      </div>
+      <div class="product-card-body">
+        <div class="product-card-brand">${p.marca}</div>
+        <div class="product-card-name">${p.nombre}</div>
+        <div class="product-card-sku">SKU: ${p.sku}</div>
+      </div>
+      <div class="product-card-footer">
+        <div class="no-price">💬 A cotizar</div>
+        <button class="add-quick" onclick="event.stopPropagation();quickAdd(${p.id})" title="Agregar a cotización">+</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function setCat(cat) {
+  activeCategory = cat;
+  searchQuery = '';
+  document.getElementById('search-input').value = '';
+  renderCatalog();
+}
+
+// ══════════════════════════════════════════════
+//  DETALLE DE PRODUCTO
+// ══════════════════════════════════════════════
+function openProduct(id) {
+  currentProduct = PRODUCTS.find(p => p.id === id);
+  if (!currentProduct) return;
+  selectedVariants = {};
+  currentProduct.variantes?.forEach(v => { selectedVariants[v.tipo] = v.opciones[0]; });
+
+  // Breadcrumb
+  document.getElementById('detail-breadcrumb').innerHTML =
+    `<a href="#" onclick="showView('home');return false;">Inicio</a> <span>›</span>
+     <a href="#" onclick="showView('catalog');return false;">Catálogo</a> <span>›</span>
+     <a href="#" onclick="filterByCategory('${currentProduct.categoria}');return false;">${currentProduct.categoria}</a> <span>›</span>
+     ${currentProduct.nombre}`;
+
+  document.getElementById('detail-emoji').textContent = currentProduct.emoji;
+  document.getElementById('detail-cat-label').textContent = currentProduct.categoria;
+
+  // Thumbs
+  document.getElementById('detail-thumbs').innerHTML =
+    [currentProduct.emoji, '📦', '📋'].map((e,i) =>
+      `<div class="thumb${i===0?' active':''}">${e}</div>`
+    ).join('');
+
+  // Specs
+  document.getElementById('detail-specs').innerHTML =
+    Object.entries(currentProduct.specs).map(([k,v]) =>
+      `<div class="spec-row"><dt>${k}</dt><dd>${v}</dd></div>`
+    ).join('');
+
+  document.getElementById('detail-desc').textContent = currentProduct.descripcion;
+  document.getElementById('ab-brand').textContent = currentProduct.marca;
+  document.getElementById('ab-sku').textContent = 'SKU: ' + currentProduct.sku;
+  document.getElementById('ab-title').textContent = currentProduct.nombre;
+
+  // Variantes
+  renderDetailVariants();
+
+  // Unidades
+  const sel = document.getElementById('ab-unit');
+  sel.innerHTML = currentProduct.unidades.map(u => `<option>${u}</option>`).join('');
+
+  document.getElementById('ab-qty').value = 1;
+  showView('detail');
+}
+
+function renderDetailVariants() {
+  const sec = document.getElementById('ab-variants-section');
+  if (!currentProduct.variantes?.length) { sec.innerHTML = ''; return; }
+  sec.innerHTML = currentProduct.variantes.map(v => `
+    <div style="margin-bottom:14px;">
+      <div class="ab-label">${v.tipo}</div>
+      <div class="ab-variants">
+        ${v.opciones.map(o =>
+          `<button class="var-btn${selectedVariants[v.tipo]===o?' active':''}"
+            onclick="selectVariant('${v.tipo}','${o}')">${o}</button>`
+        ).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectVariant(tipo, valor) {
+  selectedVariants[tipo] = valor;
+  renderDetailVariants();
+}
+
+function changeDetailQty(delta) {
+  const inp = document.getElementById('ab-qty');
+  inp.value = Math.max(1, parseInt(inp.value || 1) + delta);
+}
+
+function addCurrentToCart() {
+  if (!currentProduct) return;
+  const qty = parseInt(document.getElementById('ab-qty').value) || 1;
+  const unit = document.getElementById('ab-unit').value;
+  addToCart(currentProduct, qty, unit, { ...selectedVariants });
+}
+
+function sendSingleToWA() {
+  if (!currentProduct) return;
+  const qty = parseInt(document.getElementById('ab-qty').value) || 1;
+  const unit = document.getElementById('ab-unit').value;
+  const varTxt = Object.entries(selectedVariants).map(([k,v]) => `${k}: ${v}`).join(' | ');
+  const msg =
+    `🔩 *CONSULTA RÁPIDA — ${CONFIG.storeName}*\n` +
+    `──────────────────────\n` +
+    `📦 *${currentProduct.nombre}*\n` +
+    `   • SKU: ${currentProduct.sku}\n` +
+    `   • Marca: ${currentProduct.marca}\n` +
+    (varTxt ? `   • Variante: ${varTxt}\n` : '') +
+    `   • Unidad: ${unit}\n` +
+    `   • Cantidad: *${qty}*\n\n` +
+    `──────────────────────\n` +
+    `¿Tienen disponibilidad y cuál es el precio?`;
+  window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`);
+}
+
+// ══════════════════════════════════════════════
+//  CARRITO
+// ══════════════════════════════════════════════
+function addToCart(product, qty, unit, variants) {
+  const varKey = JSON.stringify(variants);
+  const existing = cart.find(i => i.productId === product.id && JSON.stringify(i.variants) === varKey && i.unit === unit);
+  if (existing) {
+    existing.qty += qty;
+  } else {
+    cart.push({
+      id: Date.now(),
+      productId: product.id,
+      nombre: product.nombre,
+      marca: product.marca,
+      sku: product.sku,
+      emoji: product.emoji,
+      qty, unit, variants,
+      nota: ''
+    });
+  }
+  updateCartCount();
+  showToast();
+}
+
+function quickAdd(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  if (!p) return;
+  const defaultVariants = {};
+  p.variantes?.forEach(v => { defaultVariants[v.tipo] = v.opciones[0]; });
+  addToCart(p, 1, p.unidades[0], defaultVariants);
+}
+
+function updateCartCount() {
+  const total = cart.reduce((s, i) => s + i.qty, 0);
+  document.getElementById('cart-count').textContent = total;
+  document.getElementById('sum-items').textContent = cart.length + ' ítem' + (cart.length!==1?'s':'');
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(i => i.id !== id);
+  updateCartCount();
+  renderCart();
+}
+
+function changeCartQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  item.qty = Math.max(1, item.qty + delta);
+  renderCart();
+  updateCartCount();
+}
+
+function updateNota(id, val) {
+  const item = cart.find(i => i.id === id);
+  if (item) item.nota = val;
+}
+
+function renderCart() {
+  updateCartCount();
+  const container = document.getElementById('cart-items');
+  if (!cart.length) {
+    container.innerHTML = `
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🛒</div>
+        <p>Tu lista de cotización está vacía.<br>Agregá productos desde el catálogo.</p>
+        <button class="btn-add" style="width:auto;padding:12px 28px;" onclick="showView('catalog')">Ir al catálogo</button>
+      </div>`;
+    return;
+  }
+  container.innerHTML = cart.map((item, idx) => {
+    const varTxt = Object.entries(item.variants || {}).map(([k,v]) => `${k}: <strong>${v}</strong>`).join(' · ');
+    return `
+    <div class="cart-item">
+      <div class="ci-img">${item.emoji}</div>
+      <div>
+        <div class="ci-name">${item.nombre}</div>
+        <div class="ci-meta">${item.marca} · SKU: ${item.sku}</div>
+        ${varTxt ? `<div class="ci-variant">${varTxt}</div>` : ''}
+        <div class="ci-qty-row">
+          <div class="ci-qty-ctrl">
+            <button onclick="changeCartQty(${item.id},-1)">−</button>
+            <span>${item.qty}</span>
+            <button onclick="changeCartQty(${item.id},1)">+</button>
+          </div>
+          <span class="ci-unit">${item.unit}</span>
+        </div>
+        <div class="ci-note">
+          <input type="text" placeholder="Nota para este producto (opcional)"
+            value="${item.nota}" oninput="updateNota(${item.id},this.value)">
+        </div>
+      </div>
+      <button class="btn-remove" onclick="removeFromCart(${item.id})" title="Eliminar">✕</button>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════
+//  ENVÍO A WHATSAPP
+// ══════════════════════════════════════════════
+function sendToWhatsApp() {
+  if (!cart.length) {
+    alert('Tu carrito está vacío. Agregá productos antes de enviar.');
+    return;
+  }
+  const name = document.getElementById('cl-name').value.trim();
+  const loc  = document.getElementById('cl-loc').value.trim();
+  if (!name || !loc) {
+    alert('Completá tu nombre y localidad para enviar el pedido.');
+    return;
+  }
+  const phone = document.getElementById('cl-phone').value.trim();
+  const note  = document.getElementById('cl-note').value.trim();
+
+  const numberEmojis = ['1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟'];
+  const itemsText = cart.map((item, i) => {
+    const n = i < 10 ? numberEmojis[i] : `${i+1}.`;
+    const varTxt = Object.entries(item.variants || {}).map(([k,v]) => `     ▸ ${k}: ${v}`).join('\n');
+    const notaLine = item.nota ? `     📝 "${item.nota}"` : '';
+    return [
+      `${n} *${item.nombre}*`,
+      `     • Marca: ${item.marca} | SKU: \`${item.sku}\``,
+      varTxt,
+      `     • Unidad: ${item.unit}`,
+      `     • Cantidad: *${item.qty}*`,
+      notaLine
+    ].filter(Boolean).join('\n');
+  }).join('\n\n');
+
+  const msg = [
+    `🏗️ *NUEVA CONSULTA DE COTIZACIÓN*`,
+    `${CONFIG.storeName}`,
+    `──────────────────────────`,
+    `👤 *Cliente:* ${name}`,
+    `📍 *Localidad:* ${loc}`,
+    phone ? `📞 *Teléfono:* ${phone}` : '',
+    `──────────────────────────`,
+    `🛒 *DETALLE DEL PEDIDO*`,
+    `──────────────────────────`,
+    ``,
+    itemsText,
+    ``,
+    `──────────────────────────`,
+    note ? `📝 *NOTA GENERAL:*\n"${note}"\n──────────────────────────` : '',
+    `✅ _Pedido enviado desde ${CONFIG.storeUrl}_`
+  ].filter(l => l !== null && l !== undefined).join('\n');
+
+  window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`);
+}
+
+// ══════════════════════════════════════════════
+//  TOAST
+// ══════════════════════════════════════════════
+let toastTimer;
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ── Init ──
+updateCartCount();
+</script>
+</body>
+</html>
